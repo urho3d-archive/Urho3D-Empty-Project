@@ -59,10 +59,12 @@ private:
 
 	// Control names
 	HashMap<int, String> _controlMapNames;
+	
 
 	int _activeAction;
 	SharedPtr<ConfigFile> _configFile;
 
 	Controls _controls;
 	Timer _timer;
+	float _mouseSensitivity;
 };

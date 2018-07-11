@@ -12,6 +12,7 @@
 #include "BaseApplication.h"
 #include "Config/ConfigFile.h"
 #include "Input/ControllerInput.h"
+#include "Console/CustomConsole.h"
 
 #include <Urho3D/UI/Button.h>
 #include <Urho3D/Graphics/Graphics.h>
@@ -114,6 +115,16 @@ void BaseApplication::Start()
     }
 
     SubscribeToEvents();
+
+    // Return existing console if possible
+    auto* console = GetSubsystem<CustomConsole>();
+    if (!console)
+    {
+        console = new CustomConsole(context_);
+        console->SetDefaultStyle(cache->GetResource<XMLFile>("UI/DefaultStyle.xml"));
+        context_->RegisterSubsystem(console);
+        console->Toggle();
+    }
 
     levelManager = context_->CreateObject<LevelManager>();
     _alertMessage = context_->CreateObject<Message>();

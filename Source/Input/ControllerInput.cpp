@@ -6,7 +6,8 @@
 /// Construct.
 ControllerInput::ControllerInput(Context* context) :
     Object(context),
-	_activeAction(0)
+	_activeAction(0),
+	_mouseSensitivity(0.0f)
 {
 	_controlMapNames[CTRL_FORWARD] = "CTRL_FORWARD";
 	_controlMapNames[CTRL_BACK] = "CTRL_BACK";
@@ -54,6 +55,8 @@ void ControllerInput::LoadConfig()
 		}
 	}
 
+	_mouseSensitivity = _configFile->GetFloat("mouse", "Sensitivity", 0.1f);
+
 	CreateConfigMaps();
 }
 
@@ -95,6 +98,7 @@ void ControllerInput::SaveConfig()
 			URHO3D_LOGINFO(">>>>>>>> Setting keyboard : " + controlName + " => " + value);
 		}
 	}
+	_configFile->Set("mouse", "Sensitivity", String(_mouseSensitivity));
 
 	Urho3D::File file(context_, GetSubsystem<FileSystem>()->GetProgramDir() + "Data/Config/controls.cfg", Urho3D::FILE_WRITE);
 	_configFile->Save(file, true);
@@ -302,12 +306,11 @@ void ControllerInput::HandleUpdate(StringHash eventType, VariantMap& eventData)
 {
 	auto* input = GetSubsystem<Input>();
     // Mouse sensitivity as degrees per pixel
-    const float MOUSE_SENSITIVITY = 0.1f;
 
     // Use this frame's mouse motion to adjust camera node yaw and pitch. Clamp the pitch between -90 and 90 degrees
     IntVector2 mouseMove = input->GetMouseMove();
-    _controls.yaw_ += MOUSE_SENSITIVITY * mouseMove.x_;
-    _controls.pitch_ += MOUSE_SENSITIVITY * mouseMove.y_;
+    _controls.yaw_ += _mouseSensitivity * mouseMove.x_;
+    _controls.pitch_ += _mouseSensitivity * mouseMove.y_;
     _controls.pitch_ = Clamp(_controls.pitch_, -90.0f, 90.0f);
 }
 

@@ -293,6 +293,11 @@ void SettingsWindow::CreateControllerSettingsView()
     }
 }
 
+void SettingsWindow::CreateMouseSettingsView()
+{
+
+}
+
 Button* SettingsWindow::CreateButton(String name, IntVector2 position, IntVector2 size, HorizontalAlignment hAlign, VerticalAlignment vAlign)
 {
     Button* button = _base->CreateChild<Button>();

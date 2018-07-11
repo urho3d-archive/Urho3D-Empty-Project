@@ -26,6 +26,7 @@ private:
     void CreateGraphicsSettingsView();
     void CreateAudioSettingsView();
     void CreateControllerSettingsView();
+    void CreateMouseSettingsView();
 
     void HandleClose(StringHash eventType, VariantMap& eventData);
     void HandleSave(StringHash eventType, VariantMap& eventData);
@@ -33,6 +34,7 @@ private:
     void ShowVideoSettings(StringHash eventType, VariantMap& eventData);
     void ShowAudioSettings(StringHash eventType, VariantMap& eventData);
     void ShowControllerSettings(StringHash eventType, VariantMap& eventData);
+    void ShowMouseSettings(StringHash eventType, VariantMap& eventData);
 
     void HandleChangeControls(StringHash eventType, VariantMap& eventData);
     void HandleControlsUpdated(StringHash eventType, VariantMap& eventData);
